@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Calculator.css";
 
-export default function SolarCalculatorMain() {
-  const [panelArea, setPanelArea] = useState(25);
+export default function SolarCalculatorMain({ setSolarData,setLastUpdated }) {
+  const [panelArea, setPanelArea] = useState(25);;
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [city, setCity] = useState("");
@@ -67,7 +67,7 @@ export default function SolarCalculatorMain() {
     }
   };
 
-  // 🔥 Call Backend
+  // Call Backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!latitude || !longitude) {
@@ -85,6 +85,8 @@ export default function SolarCalculatorMain() {
       const res = await fetch(url);
       const data = await res.json();
       setPrediction(data);
+      setSolarData(data);
+      setLastUpdated(new Date());
       setError("");
     } catch {
       setError("Backend request failed.");
