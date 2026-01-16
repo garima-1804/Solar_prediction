@@ -92,7 +92,7 @@ export default function Dashboard({ solarData }) {
             <div className="metric-trend positive">+2.1%</div>
           </div>
           <div className="metric-value">
-            {(solarData.solar_energy * 1000 / 24).toFixed(1)}
+            {(solarData.solar_energy ).toFixed(1)}
             <span className="metric-unit">kW</span>
           </div>
           <div className="metric-chart">
@@ -113,21 +113,21 @@ export default function Dashboard({ solarData }) {
 
         <div className="metric-card">
           <div className="metric-header">
-            <div className="metric-title">Forecast Accuracy</div>
+            <div className="metric-title">Prediction Accuracy</div>
             <div className="metric-indicator excellent">Excellent</div>
           </div>
-          <div className="metric-value">94.2<span className="metric-unit">%</span></div>
+          <div className="metric-value">90.92<span className="metric-unit">%</span></div>
           <div className="progress-container">
             <div className="progress-labels">
-              <span>Target: 90%</span>
-              <span>94.2%</span>
+              <span>   </span>
+              <span>90.92%</span>
             </div>
             <div className="progress-bar">
               <div className="progress-fill" style={{ width: '94.2%' }}></div>
             </div>
           </div>
           <div className="metric-footer">
-            <span className="metric-note">7-day rolling average</span>
+            <span className="metric-note"></span>
           </div>
         </div>
 
@@ -136,7 +136,9 @@ export default function Dashboard({ solarData }) {
             <div className="metric-title">Weather Impact</div>
             <div className="metric-status optimal">Optimal</div>
           </div>
-          <div className="metric-value positive">+12<span className="metric-unit">%</span></div>
+          <div className="metric-value positive">
+            {(((1 - 0.004 * (solarData.weather.temperature - 273.15 + 20 - 25)) * (1 - 0.001 * Math.max(solarData.weather.humidity - 50, 0)) - 1) * 100).toFixed(2)}
+            <span className="metric-unit">%</span></div>
           <div className="weather-info">
             <div className="weather-icon">☀️</div>
             <div className="weather-details">
@@ -158,7 +160,9 @@ export default function Dashboard({ solarData }) {
             <div className="metric-title">AQI Impact</div>
             <div className="metric-alert moderate">Moderate</div>
           </div>
-          <div className="metric-value negative">-3<span className="metric-unit">%</span></div>
+          <div className="metric-value negative">
+            {(-((1 - Math.exp(-0.0006 * solarData.aqi.AQI)) * 100)).toFixed(1)}
+            <span className="metric-unit">%</span></div>
           <div className="aqi-scale">
             <div className="aqi-level good"></div>
             <div className="aqi-level moderate active"></div>
@@ -199,7 +203,8 @@ export default function Dashboard({ solarData }) {
                 </div>
               ))}
             </div>
-            <button className="card-action-btn">
+            <button className="card-action-btn"
+            onClick={() => navigate("/forecasting")}>
               View Detailed Forecast
             </button>
           </div>
@@ -211,18 +216,21 @@ export default function Dashboard({ solarData }) {
             </div>
             <div className="savings-preview">
               <div className="savings-metric">
-                <div className="savings-value">1,247 Rs</div>
-                <div className="savings-label">Monthly Savings</div>
+                <div className="savings-value">
+                  ₹ {((solarData.solar_energy || 0) * 4.43 * 365).toFixed(0)}
+                </div>
+                <div className="savings-label">Annual Savings</div>
               </div>
               <div className="savings-metric">
                 <div className="savings-value">
-                  {(solarData.co2_offset * 30).toFixed(1)} kg
+                  {(solarData.co2_offset * 365).toFixed(1)} kg
                 </div>
-                <div className="savings-label">Monthly CO₂ Reduction</div>
+                <div className="savings-label">Annual CO₂ Reduction</div>
 
               </div>
             </div>
-            <button className="card-action-btn">
+            <button className="card-action-btn"
+            onClick={() => navigate("/calculator")} >
               Open Calculator
             </button>
           </div>

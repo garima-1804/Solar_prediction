@@ -3,7 +3,8 @@ import pandas as pd
 
 
 # Load model once when Django starts
-model = joblib.load("solar_app/predicting_Solar_Irradiance_model.pkl")
+model = joblib.load("solar_app/predicting_Solar_Irradiance_model_old.pkl")
+# model = joblib.load("solar_app/predicting_Solar_Irradiance_model.pkl")
 
 
 # Column order must match what you used in training

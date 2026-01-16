@@ -337,7 +337,7 @@ export default function SolarCalculatorMain({ setSolarData,setLastUpdated }) {
                 <span className="detail-value">
                   {prediction.solar_irradiance?.toFixed(2) || "0.00"} kWh/m²/day
                 </span>
-                <span className="solar-energy-detail-label">Solar Irradiance</span>
+                <span className="solar-energy-detail-label">Solar Irradiation</span>
               </div>
               
               <div className="detail-item">
@@ -379,7 +379,7 @@ export default function SolarCalculatorMain({ setSolarData,setLastUpdated }) {
             
             <div className="solar-finance-result-main">
               <span className="solar-finance-large">
-                {((prediction.solar_energy || 0) * 4.43 * 365).toFixed(0)} Rs
+                 ₹ {((prediction.solar_energy || 0) * 4.43 * 365).toFixed(0)}
               </span>
               <div className="solar-finance-desc">
                 Estimated Annual Savings (at Rs 4.43/kWh)
